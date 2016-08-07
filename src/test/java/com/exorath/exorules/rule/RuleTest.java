@@ -16,9 +16,27 @@
 
 package com.exorath.exorules.rule;
 
+import org.junit.Test;
+import rx.Observable;
+
+
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by Toon on 8/7/2016.
  */
 public class RuleTest {
+    @Test
+    public void isInterfaceTest() {
+        assertTrue(Rule.class.isInterface());
+    }
 
+    @Test
+    public void hasEvaluateMethodTest() throws NoSuchMethodException {
+        assertTrue(Rule.class.getMethod("evaluate").getReturnType().equals(boolean.class));
+    }
+    @Test
+    public void hasGetObservableEvaluationMethodTest() throws NoSuchMethodException {
+        assertTrue(Rule.class.getMethod("getObservableEvaluation").getReturnType().equals(Observable.class));
+    }
 }
