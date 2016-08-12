@@ -21,7 +21,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import rx.Observable;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
@@ -40,7 +39,7 @@ public class CompositeRuleTest {
     private Rule trueRule1, trueRule2, falseRule1;
 
 
-    private CompositeRule compositeRule;
+    private CompositeRule<Rule> compositeRule;
 
     @Before
     public void setup() {
@@ -52,8 +51,7 @@ public class CompositeRuleTest {
 
         for(Rule rule : rules)
             when(rule.getObservableEvaluation()).thenReturn(PublishSubject.create());
-
-        compositeRule = new CompositeRule();
+        compositeRule = new CompositeRule<>();
     }
 
     @Test
@@ -160,7 +158,6 @@ public class CompositeRuleTest {
         when(rule.getObservableEvaluation()).thenReturn(observable);
 
         compositeRule.addRule(rule);
-
         AtomicBoolean evaluation = new AtomicBoolean(false);
         compositeRule.getObservableEvaluation().subscribe(bool -> evaluation.set(bool));
         when(rule.evaluate()).thenReturn(true);

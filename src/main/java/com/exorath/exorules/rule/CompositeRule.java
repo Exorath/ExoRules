@@ -34,7 +34,7 @@ import java.util.Set;
  * <p>
  * Created by Toon on 8/7/2016.
  */
-public class CompositeRule implements Rule {
+public class CompositeRule<E extends Rule> implements Rule {
 
     protected Map<Rule, Subscription> subsByRule = new HashMap<>();
 
@@ -59,16 +59,16 @@ public class CompositeRule implements Rule {
         return true;
     }
 
-    public void addRule(Rule rule) {
+    public void addRule(E rule) {
         Subscription subscription = rule.getObservableEvaluation().subscribe(evaluation -> evaluate());
         subsByRule.put(rule, subscription);
     }
 
-    public boolean containsRule(Rule rule) {
+    public boolean containsRule(E rule) {
         return subsByRule.containsKey(rule);
     }
 
-    public boolean removeRule(Rule rule) {
+    public boolean removeRule(E rule) {
         if (!subsByRule.containsKey(rule))
             return false;
         if (subsByRule.get(rule) != null)
