@@ -204,4 +204,27 @@ public class CompositeRuleTest {
 
         assertFalse(evaluation.get());
     }
+
+    @Test
+    public void getRulesNotNullTest(){
+        assertTrue(compositeRule.getRules() != null);
+    }
+
+    @Test
+    public void getRulesEmptyByDefaultTest(){
+        assertTrue(compositeRule.getRules().isEmpty());
+    }
+
+    @Test
+    public void getRulesContainsAddedRuleTest(){
+        compositeRule.addRule(trueRule1);
+        assertTrue(compositeRule.getRules().contains(trueRule1));
+    }
+
+    @Test
+    public void getRulesDoesNotContainRemovedRuleTest(){
+        compositeRule.addRule(trueRule1);
+        compositeRule.removeRule(trueRule1);
+        assertFalse(compositeRule.getRules().contains(trueRule1));
+    }
 }
