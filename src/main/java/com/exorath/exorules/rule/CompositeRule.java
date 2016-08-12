@@ -22,10 +22,7 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class representing a composite rule composed of a set of rules.
@@ -36,7 +33,7 @@ import java.util.Set;
  */
 public class CompositeRule<E extends Rule> implements Rule {
 
-    protected Map<Rule, Subscription> subsByRule = new HashMap<>();
+    protected Map<E, Subscription> subsByRule = new HashMap<>();
 
     private Subject<Boolean, Boolean> observableEvaluation = new SerializedSubject<>(PublishSubject.create());
 
@@ -64,6 +61,9 @@ public class CompositeRule<E extends Rule> implements Rule {
         subsByRule.put(rule, subscription);
     }
 
+    public Collection<E> getRules(){
+        return subsByRule.keySet();
+    }
     public boolean containsRule(E rule) {
         return subsByRule.containsKey(rule);
     }
